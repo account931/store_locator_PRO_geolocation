@@ -1,5 +1,5 @@
 //Store_locator_PRO_geolocation -> 
-//THIS IS "PRO" version, which now combines store_locator + geolocation.
+//THIS IS "PRO" version, which now combines store_locator + geolocation = display, add, delete markers pin + find your current location + save current location
 
 =========================== Merging issues ======================
 # In geoLocationLocator.js use {window.map} to get it from storeLocator_core.js, because in geoLocationLocator.js we no longer create our personal {var map} nor use {map.init()}
