@@ -1,0 +1,73 @@
+/* Radar icon onHover change color */
+#radar:hover{
+	 /*background:red;*/
+	 -webkit-transform: scale(1.1);
+     -ms-transform: scale(1.1);
+     transform: scale(1.1);
+}
+
+ /* Disabled=> these transition forces JS blinking in geolocationLocator.js almost invisible. #descripe the animation behaviour */
+  #radarR{
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+     transition: all 0.5s ease;
+  }
+  
+  /* ads border to radar png for better visibility in mobile version */
+  #radar{
+      -webkit-filter: drop-shadow(2px 2px 0 white)
+	   drop-shadow(-2px 2px 0 white)
+	   drop-shadow(2px -2px 0 white)
+       drop-shadow(-2px -2px 0 white);
+
+	filter: drop-shadow(2px 2px 0 white) 
+		drop-shadow(-2px 2px 0 white)
+		drop-shadow(2px -2px 0 white)
+       	drop-shadow(-2px -2px 0 white);
+}
+ 
+ 
+ /* Black screen with runnung info about geolocation process*/
+ #infoBox{
+	display:none;
+	position:absolute;
+	top:1%;
+	left:10px;
+	color:white;
+	background-color: black;
+	padding:20px 40px 20px 20px; /* top, right,*/
+	border-radius:20px;
+	z-index:999999999999;
+}
+
+
+
+ /* CSS for "X" close button in #infoBox*/
+.close-spann{
+	position:absolute;
+	top:1%.close-span;
+	right:20px;
+}
+
+.close-spann:hover{
+	cursor:pointer;
+}
+
+
+ /*Button top right,"iPhone arrow" that makes radar appear, absolute position*/
+#showRadar{
+	font-size:18px; 
+	position:absolute;top:0px;right:0px;
+}
+
+/*  ---------Mobile --*/
+@media screen and (max-width: 460px) {   
+    #showRadar{
+	    font-size:11px; 
+    }
+}
+/*  ------END Mobile --*/
+
+
+

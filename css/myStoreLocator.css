@@ -1,0 +1,80 @@
+    /* map needs width and height to appear */
+    #map{
+	    width: 900px;
+	    max-width: 100%;
+	    height: 500px;
+    }
+
+    #info_div{
+	   margin-top:14px;
+	   background:grey;
+	   padding:20px;
+	   width:50%;
+	   border-radius:20px;
+    }
+	
+	/* ---------------------------------------- Mobile */
+    @media screen and (max-width: 480px) { 
+	    #info_div{
+	        width:90%;
+	        border-radius:20px;
+        }
+    }
+	/* ------------------------------------ END Mobile */
+	
+	#info_div p{
+		color:white;
+	}
+
+    #myTil{
+	   position:absolute;
+	   background:red;
+	   width:30%;
+    }
+
+   .myShadow{
+       box-shadow: 10px 10px 5px grey;
+   }
+   
+    .dest2 {
+     overflow:hidden;
+	 word-wrap: break-word;
+   }
+   
+   .red {color: red;
+   }
+   
+   /* -- START CLASS no-gutter that fixes spaces between cols--*/
+   .row.no-gutter {
+      margin-left: 0;
+      margin-right: 0;
+    }
+    .row.no-gutter [class*='col-']:not(:first-child),
+    .row.no-gutter [class*='col-']:not(:last-child) {
+       padding-right: 0;
+       padding-left: 0;
+    }
+    .row > div {
+        background: lightgrey;
+        border: 1px solid;
+    }
+   /* --END  CLASS no-gutter that fixes spaces between cols--*/
+   
+   
+   /* this is the fix to prevent page moving left when div_info appears and scrolls bar appears on the right forcing the page to move left. This adds permant scroll presence */
+   html {
+    overflow-y: scroll;
+   } 
+   
+   
+    /* -----------------------Start Modal----------------------------*/
+	 /* -----------------------END  Modal----------------------------*/
+   
+   
+   .radius-red{
+       border:solid red 1px;
+	   padding:10px;
+	   border-radius:19px;
+   }
+   
+   
