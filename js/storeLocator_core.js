@@ -520,7 +520,42 @@ var globalCoords;  //coords of current clicked, which we will pass to {'ajax_php
 	   
 	   
 	   
-	   //Gets  Matrix API distance
+	   
+	   
+	   
+	   
+	   
+	   //On <option><select>  Change, recenter map-----------
+	   // **************************************************************************************
+       // **************************************************************************************
+       //                                                                                     **
+       $(document).on("change", '#selectID1', function(e) {  //must have {e} to detect event //newly generated
+          
+		   var coordsX = $("#selectID1").val().replace("(", "").replace(")", ""); // get the value of start, which is coords {(2.65, 5.88)}, and  removes {()} from it
+           var latLngX = coordsX.split(",");
+            var pos = { //adding coords to object
+              lat: parseFloat(latLngX[0]),  //parseFloat is a must, GM won't accept string as coordinates, be sure not to use parseInt(), -> will return 50 only
+              lng: parseFloat(latLngX[1])
+            };
+			
+			window.map.setCenter(pos);  //MEGA ERROR FIX while merging-> use window.map to get it from storeLocator_core.js	
+            window.map.setZoom(17);		//set desired zoom
+	   });
+ 
+      //End  OnChange-------
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   
+	   //Gets  Matrix API distance between 2 points
 	   // **************************************************************************************
        // **************************************************************************************
        //                                                                                     **
