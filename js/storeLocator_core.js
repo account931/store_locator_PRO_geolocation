@@ -115,7 +115,7 @@ var globalCoords;  //coords of current clicked, which we will pass to {'ajax_php
 	//MEGA FIX when merging store_Locator with geolocation to store_locator_PRO_geolocation, var map must be global to be seen in geolocationLocator.js, declare it here as window.map in 1st line;
 	/*var*/ map = new google.maps.Map(document.getElementById('map'), {
 		center: myMapCenter,
-		zoom: 14,
+		zoom: 17,
 		
 	});
 	
@@ -133,7 +133,7 @@ var globalCoords;  //coords of current clicked, which we will pass to {'ajax_php
       globalCoords = startLocation.toString().replace("(", "").replace(")", "");//gets current clicked coords to global var, which we will pass to {'ajax_php/insertSqlMarker_Handler.php'} to add to SQL. Should use {.toString} otherwise it crashes + removes "()"
 	  //alert(globalCoords);
 	  
-	  // show coors in div + button to open modal
+	  // show coors in div at the BOTTOM + button to open modal
 	  // we add {data-toggle='modal' data-target='#myModal'} tp button to open modal with Bootstrap, no additional JS is needed
 	  var text = "<p class='red'>" + startLocation + "</p><p>Add this point to your markers?</p><input id='btn_add_toMarkres' type='button' name='Button' value='yes' class='btn btn-info' data-toggle='modal' data-target='#myModal'>  <input id='btn_add_cancel' type='button' name='Button' value='No' class='btn btn-danger' >"; 
 	  $("#info_div").stop().fadeOut("slow",function(){ $(this).html(text)}).fadeIn(2000);
@@ -172,7 +172,7 @@ var globalCoords;  //coords of current clicked, which we will pass to {'ajax_php
             previousMarker = new google.maps.Marker({position: startLocation, map: map, title: 'bbb'});	
 
            //adds pop-up infowindow
-           //My pop up/infowindow onClick------
+           //My pop up/infowindow onClick   ------
 			 infowindow = new google.maps.InfoWindow({
                  content: "<p>Add this point to markers?</p>" + startLocation + "<br><input id='btn_add_toMarkres' type='button' name='Button' value='yes' class='btn btn-info' data-toggle='modal' data-target='#myModal'> <input id='btn_add_cancel' type='button' name='Button' value='No' class='btn btn-danger' > "
               });
@@ -393,7 +393,7 @@ var globalCoords;  //coords of current clicked, which we will pass to {'ajax_php
 	
 	
 	// ADDS SQL markers to map
-	// runs every Stores array Object through function markStore
+  // runs every Stores array Object through function markStore< {store} is used like {this}
 	// **************************************************************************************
     // **************************************************************************************
     //                                                                                     **
@@ -525,7 +525,7 @@ var globalCoords;  //coords of current clicked, which we will pass to {'ajax_php
 	   
 	   
 	   
-	   //On <option><select>  Change, recenter map-----------
+	   //On <option><select> 111  Change (changing marker from list ), do recenter the map-----------
 	   // **************************************************************************************
        // **************************************************************************************
        //                                                                                     **
@@ -539,7 +539,14 @@ var globalCoords;  //coords of current clicked, which we will pass to {'ajax_php
             };
 			
 			window.map.setCenter(pos);  //MEGA ERROR FIX while merging-> use window.map to get it from storeLocator_core.js	
+			//window.map.panTo(pos);
             window.map.setZoom(17);		//set desired zoom
+			
+		
+			
+			
+			$(this).blur();  //hides "Done button in mobile"
+			//showStoreInfo(storeInfo, marker);
 	   });
  
       //End  OnChange-------
@@ -548,7 +555,32 @@ var globalCoords;  //coords of current clicked, which we will pass to {'ajax_php
 	   
 	   
 	   
-	   
+	    //On <option><select> 222  Change (changing marker from list ), do recenter the map-----------
+	   // **************************************************************************************
+       // **************************************************************************************
+       //                                                                                     **
+       $(document).on("change", '#selectID2', function(e) {  //must have {e} to detect event //newly generated
+          
+		   var coordsX = $("#selectID2").val().replace("(", "").replace(")", ""); // get the value of start, which is coords {(2.65, 5.88)}, and  removes {()} from it
+           var latLngX = coordsX.split(",");
+            var pos = { //adding coords to object
+              lat: parseFloat(latLngX[0]),  //parseFloat is a must, GM won't accept string as coordinates, be sure not to use parseInt(), -> will return 50 only
+              lng: parseFloat(latLngX[1])
+            };
+			
+			window.map.setCenter(pos);  //MEGA ERROR FIX while merging-> use window.map to get it from storeLocator_core.js	
+            window.map.setZoom(17);		//set desired zoom
+			
+			$(this).blur(); //hides "Done button in mobile"
+			//showStoreInfo(storeInfo, marker);
+	   });
+ 
+      //End  OnChange-------
+	  
+	  
+	  
+	  
+	  
 	   
 	   
 	   
