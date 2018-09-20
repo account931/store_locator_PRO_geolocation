@@ -4,6 +4,11 @@
       <title>Pin Locator</title>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	  
+	   
+      <meta http-equiv="Content-Type" content="text/html">
+      <meta name="description" content="Pin Locator" />
+      <meta name="keywords" content="Pin Locator, save your locations, save POIs">
 
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -12,7 +17,7 @@
 	  <script src="js/addMarkerFromModal.js"></script><!--  add a marker, runs interaction with modal windows--> 
 	  <script src="js/directionApi.js"></script><!--  Api part that draws route on map-->
 	  
-	  <script src="js/geolocation_files/geolocationLocator.js"></script> <!-- geolocation Locator JS file -->
+	  <script src="js/geolocation_files/geolocationLocator.js"></script> <!-- injected geolocation Locator JS file -->
 	  
       <link rel="stylesheet" type="text/css" media="all" href="css/myStoreLocator.css">
 	  <link rel="stylesheet" type="text/css" media="all" href="css/geolocatiionLocator/geolocationLocator.css"> <!-- geolocation Locator CSS file -->
@@ -219,7 +224,8 @@
  <br>
  
  <!-- my custom FB share-->
- <a href="https://www.facebook.com/sharer/sharer.php?u=http://waze.zzz.com.ua/store_locator" target="_blank"><input type="button" value="MyShare" style="background:blue;padding:5px 20px 5px 20px;color:white;border-radius:20px;"/></a>
+ <a href="https://www.facebook.com/sharer/sharer.php?u=http://waze.zzz.com.ua/store_locator" target="_blank" class="fa fa-facebook faFB" title="My share"></a>
+ <!--<a href="https://www.facebook.com/sharer/sharer.php?u=http://waze.zzz.com.ua/store_locator" target="_blank"><input type="button" value="MyShare" style="background:blue;padding:5px 20px 5px 20px;color:white;border-radius:20px;"/></a>-->
  
  </center>
  

@@ -128,6 +128,12 @@ var globalCoords;  //coords of current clicked, which we will pass to {'ajax_php
    // Click on any place at Google maps to get current coords of clicked place  and put a marker there  + opens infowindow with suggestion to add this point to SQL DB, if u confirm a modal window #myModal will pop-up (action for this modal is in (in js/addMarkerFromModa.js) )
    //-------------------------------------------------------------------------------------------
    google.maps.event.addListener(map, 'click', function(event) {
+	   
+	   //closes any prev infowindow if any SQL markers was clicked
+		if (infowindow) {
+            infowindow.close();
+		}
+		
       mapZoom = map.getZoom();
       startLocation = event.latLng; //gets current clicked coords
       globalCoords = startLocation.toString().replace("(", "").replace(")", "");//gets current clicked coords to global var, which we will pass to {'ajax_php/insertSqlMarker_Handler.php'} to add to SQL. Should use {.toString} otherwise it crashes + removes "()"
@@ -543,7 +549,17 @@ var globalCoords;  //coords of current clicked, which we will pass to {'ajax_php
             window.map.setZoom(17);		//set desired zoom
 			
 		
+			//My pop up/infowindow onClick------
+			infowindow = new google.maps.InfoWindow({
+                 content: "Hello World!"
+              });
 			
+           
+			
+			 // END My pop up onClick-------------
+			 
+			 
+			 
 			
 			$(this).blur();  //hides "Done button in mobile"
 			//showStoreInfo(storeInfo, marker);
@@ -593,6 +609,7 @@ var globalCoords;  //coords of current clicked, which we will pass to {'ajax_php
        //                                                                                     **
 	   
 	   $("#btn_CalcRoute").click(function(){
+		  
 	       if ($("#selectID1").val() == '' || $("#selectID2").val() == '' ){ // if user selected both start/stop //value of dropdowns are coords
 			  alert('Select start and stop location');
 		   } else {
@@ -604,8 +621,11 @@ var globalCoords;  //coords of current clicked, which we will pass to {'ajax_php
 				   //var URL = "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=50.258004,28.659492&destinations=50.247574,28.665838";
 				   var coords1 = $("#selectID1").val().replace("(", "").replace(")", ""); // get the value of start, which is coords {(2.65, 5.88)}, and  removes {()} from it
 				   var coords2 = $("#selectID2").val().replace("(", "").replace(")", "");
+				   
+				   //use 3rd party URL to avoid ssl
 				   var URL = "https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + coords1 + "&destinations=" + coords2;
                    //alert (URL);
+				   
 				   //Start AJAX
 				   $.ajax({
                        url: URL,
@@ -616,13 +636,20 @@ var globalCoords;  //coords of current clicked, which we will pass to {'ajax_php
                        data: { },
                        success: function(data) {
                            // do something;
+						     //alert(JSON.stringify(data, null, 4));
+						     //check if {data.status} from GM is "OVER_QUERY_LIMIT", not "OK"
+						     if(data.status == "OVER_QUERY_LIMIT") {  //if crashed
+				                 $("#distanceInfo").stop().fadeOut("slow",function(){ $(this).html("<p class='red;'>NO API KEY <br>" + data.error_message + "</p>")}).fadeIn(2000);
+								 return false; //stop proceeding further
+			                 }
+						   
 					       var finalText = "Distance between <span class='red'>" + $("#selectID1 option:selected").html() + "</span> and <span class='red'>" + $("#selectID2 option:selected").html() + " </span> is <span class='red'> " +  Math.round( data.rows[0].elements[0].distance.value / 1000) + " km.</span> <br>ETA by car is <span class='red'>" +  Math.round( data.rows[0].elements[0].duration.value / 60) + " minutes</span>.<br><br>"
 					       $("#distanceInfo").stop().fadeOut("fast",function(){ $(this).html(finalText) }).fadeIn(2000);
                            //alert(data.rows[0].elements[0].distance.value);
                        },  //end success
 			           error: function (error) {
-						   alert("Ajax failed");
-				       //$("#weatherResult").stop().fadeOut("slow",function(){ $(this).html("<h4 style='color:red;padding:3em;'>ERROR!!! <br> NO CITY FOUND</h4>")}).fadeIn(2000);
+						   alert("Matrix API ajax failed");
+				       //$("#distanceInfo").stop().fadeOut("slow",function(){ $(this).html("<h4 style='color:red;padding:3em;'>ERROR!!! <br> NO CITY FOUND</h4>")}).fadeIn(2000);
                        }	
                    });   //  END AJAXed  part 
 				   
@@ -635,7 +662,7 @@ var globalCoords;  //coords of current clicked, which we will pass to {'ajax_php
 			  
 		   //}
 		       
-		   
+	  
 	   }); // end $("#btn_CalcRoute").click
 	   
 	   // **                                                                                  **

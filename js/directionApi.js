@@ -26,7 +26,7 @@
             if (status == 'OK') {
                 directionsDisplay.setDirections(result);
             } else {
-				alert('Direction crashed');
+				alert('Direction crashed, API key is required');
 			}
         });
 	}
