@@ -1,11 +1,12 @@
 // Google maps are displayed with { <script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script> } in index.html.
 
+
 window.x;
 window.map;
 var infowindow; // add because while u were closing previous infowindow, it caused the error, was not visible in  showStoreInfo(storeInfo, marker)
 var markers = [];		
 var globalCoords;  //coords of current clicked, which we will pass to {'ajax_php/insertSqlMarker_Handler.php'} to add to SQL
-
+var previousMarker; //must be global to be able to remove a prev clicked marker
 
 
 
@@ -80,9 +81,25 @@ var globalCoords;  //coords of current clicked, which we will pass to {'ajax_php
 
 
     
-
-
-
+       //Hides any previous infoWindows
+       // **************************************************************************************
+       // **************************************************************************************
+       //                                                                                     **
+	  function hideAnyInfowindows()
+	  {
+		  //closes prev infowindow if any SQL markers was clicked
+			if (infowindow) {
+                infowindow.close();
+			}
+			
+			//closes infowindow,if it exists for a  click generated infowindow(NOT from SQL), Null it
+			if (previousMarker){  
+                previousMarker.setMap(null);
+		    }	
+	  }
+      // **                                                                                  **
+      // **************************************************************************************
+      // **************************************************************************************
 
 
 
@@ -160,10 +177,14 @@ var globalCoords;  //coords of current clicked, which we will pass to {'ajax_php
 
    
    //----------
-    var previousMarker; //must be global to be able to remove a prev clicked marker
+    //var previousMarker; //must be global to be able to remove a prev clicked marker
   
    //adds a new marker to page where u click + show infowindow
     function placeMarker() {
+		
+		hideAnyInfowindows();
+		
+		/*  //Delegated to function hideAnyInfowindows();
 		//closes any prev infowindow if any SQL markers was clicked
 		if (infowindow) {
             infowindow.close();
@@ -172,6 +193,7 @@ var globalCoords;  //coords of current clicked, which we will pass to {'ajax_php
         if (previousMarker){ //if exists a prev click generated marker, Null it 
             previousMarker.setMap(null);
 		}
+		*/
 		
         // set to map a new clicked generated marker		
         if(mapZoom == map.getZoom()){		
@@ -293,6 +315,10 @@ var globalCoords;  //coords of current clicked, which we will pass to {'ajax_php
 			//my animation-> sets info to #info_div
 			$("#info_div").stop().fadeOut("slow",function(){ $(this).html(resultedText)}).fadeIn(2000);
 			
+			
+		    hideAnyInfowindows();
+			
+			/*  //Delegated to hideAnyInfowindows();
 			//closes prev infowindow if any SQL markers was clicked
 			if (infowindow) {
                 infowindow.close();
@@ -302,7 +328,7 @@ var globalCoords;  //coords of current clicked, which we will pass to {'ajax_php
 			if (previousMarker){  
                 previousMarker.setMap(null);
 		    }
-			
+			*/
 			
 			//My pop up/infowindow onClick------
 			infowindow = new google.maps.InfoWindow({
@@ -545,20 +571,19 @@ var globalCoords;  //coords of current clicked, which we will pass to {'ajax_php
             };
 			
 			window.map.setCenter(pos);  //MEGA ERROR FIX while merging-> use window.map to get it from storeLocator_core.js	
-			//window.map.panTo(pos);
+			//window.map.panTo(pos);  //move to position smoothly, but can not work with zoom, zoom relods map, crashing animation
             window.map.setZoom(17);		//set desired zoom
 			
+			
+			hideAnyInfowindows(); //hides any prev infoWindows
 		
-			//My pop up/infowindow onClick------
-			infowindow = new google.maps.InfoWindow({
-                 content: "Hello World!"
-              });
-			
-           
-			
-			 // END My pop up onClick-------------
-			 
-			 
+			//My pop up/infowindow onChange(without marker)------
+			/*var*/ infowindow = new google.maps.InfoWindow({      //no var to be able remove prev infoWindows
+               content: $("#selectID1 option:selected").html()   //gets selected option text
+            });
+            infowindow.setPosition({lat: pos.lat, lng: pos.lng});
+            infowindow.open(map);
+			//END My pop up/infowindow onChange(without marker)------ 
 			 
 			
 			$(this).blur();  //hides "Done button in mobile"
@@ -587,6 +612,17 @@ var globalCoords;  //coords of current clicked, which we will pass to {'ajax_php
 			window.map.setCenter(pos);  //MEGA ERROR FIX while merging-> use window.map to get it from storeLocator_core.js	
             window.map.setZoom(17);		//set desired zoom
 			
+			hideAnyInfowindows(); //hides any prev infoWindows
+		
+			//My pop up/infowindow onChange(without marker)------
+			/*var*/ infowindow = new google.maps.InfoWindow({      //no var to be able remove prev infoWindows
+               content: $("#selectID1 option:selected").html()   //gets selected option text
+            });
+            infowindow.setPosition({lat: pos.lat, lng: pos.lng});
+            infowindow.open(map);
+			//END My pop up/infowindow onChange(without marker)------ 
+			
+			
 			$(this).blur(); //hides "Done button in mobile"
 			//showStoreInfo(storeInfo, marker);
 	   });
@@ -595,6 +631,13 @@ var globalCoords;  //coords of current clicked, which we will pass to {'ajax_php
 	  
 	  
 	  
+	  
+	  
+	  
+	  
+	  
+	  
+	
 	  
 	  
 	   
