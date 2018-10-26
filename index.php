@@ -34,7 +34,7 @@
    
        <h2 class="myShadow"> 
 	     <img style="height:29px;" src="images/store-locator.png"/>
-	     Custom Pin locator
+	     Custom Pin Store Locator
 	     <img style="height:29px;" src="images/store-locator.png"/><br>
 	  </h2>
     </div>
@@ -95,8 +95,8 @@
    <div id="myTil"></div>
    
    <!-- Radar ICON button, right bottom, fixed position -->
-   <div style="width:120px; position:fixed; right:0px; bottom:0px;cursor:pointer;">
-       <img src="images/radar.png" id="radar" alt="radar" title="start GPS" style="width:70%;display:none;"/>
+   <div style="width:120px; position:fixed; right:0px; bottom:0px;cursor:pointer;" >
+       <img src="images/radar.png" id="radar" alt="radar" data-toggle="tooltip" title="Click here to get your GPS position" style="width:70%;display:none;"/>
    </div>
 
   </center>

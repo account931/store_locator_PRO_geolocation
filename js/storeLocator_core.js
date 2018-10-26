@@ -616,7 +616,7 @@ var previousMarker; //must be global to be able to remove a prev clicked marker
 		
 			//My pop up/infowindow onChange(without marker)------
 			/*var*/ infowindow = new google.maps.InfoWindow({      //no var to be able remove prev infoWindows
-               content: $("#selectID1 option:selected").html()   //gets selected option text
+               content: $("#selectID2 option:selected").html()   //gets selected option text
             });
             infowindow.setPosition({lat: pos.lat, lng: pos.lng});
             infowindow.open(map);

@@ -1,7 +1,12 @@
 //geolocationLocator part 
 $(document).ready(function(){
 	
-
+    //show Radar Icon onLoad in bottom right
+	$("#radar").show(5000);
+	
+	//onLoad Show and hide tooltip for Radar Icon (show title "Click Here to get your GPS Position")
+	setTimeout(function(){$('img').tooltip('show'); }, 5000);
+    setTimeout(function(){ $('img').tooltip('hide'); },15000);
 	
 	
 	//Show / hide  radar icon when click top right
